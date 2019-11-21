@@ -96,6 +96,7 @@ I attempted to recreate faithfully the architecture of the original paper.
 - Momentum is not however dynamically altered as in the original paper.  This feature is under development.
 
 ## References
+
 [1]: https://github.com/uci-igb/higgs-susy "Higgs-Sussy"
 [2]: https://github.com/plaidml/plaidml "Plaidml"
 [3]: https://arxiv.org/pdf/1402.4735.pdf "Searching for Exotic Particles in High-Energy Physics with Deep Learning"
