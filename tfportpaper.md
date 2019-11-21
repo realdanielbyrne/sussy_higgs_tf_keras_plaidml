@@ -1,4 +1,14 @@
-# 'Searching for Exotic Particles in High-Energy Physics with Deep Learning' Port to Tensorflow/Keras
+---
+title: '''Searching for Exotic Particles in High-Energy Physics with Deep Learning''
+  Port to Tensorflow/Keras'
+author: "Daniel Byrne"
+date: "11/20/2019"
+output:
+  word_document:
+    keep_md: yes
+  html_document:
+    df_print: paged
+---
 
 
 

@@ -1,8 +1,13 @@
 ---
-title: "'Searching for Exotic Particles in High-Energy Physics with Deep Learning' Port to Tensorflow/Keras"
+title: '''Searching for Exotic Particles in High-Energy Physics with Deep Learning''
+  Port to Tensorflow/Keras'
 author: "Daniel Byrne"
 date: "11/20/2019"
-output: word_document
+output:
+  word_document:
+    keep_md: yes
+  html_document:
+    df_print: paged
 ---
 
 ```{r setup, include=FALSE}
@@ -13,7 +18,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 In 2014 p. Baldi et al. published a paper investigating the feasibility of using deep learning models to classifiy the by-products of high energy particle collisions over the then traditional method of "shallow" classifiers popular at the time. Their paper focused on discriminating the Higgs Boson and the related Super Symmertric Bosons through their decay, energy, and momentum measurements collected by the Large Hadron Collider's detectors to identify specific partical collision cascading signatures.
 
-Their reserach ultimately determined that deep learning models out performed traditional shallow methods, even while excluding the hand engineered features developed by physicists to help their shallow classifieers perform more robustly.  The original research used common practices at the time to devise the architecture of and to train a deep neural network.  They implemented their code in pylearn2, a python deep learning library.[1,3]
+Their research ultimately determined that deep learning models out performed traditional shallow methods, even while excluding the hand engineered features developed by physicists to help their shallow classifiers perform more robustly.  The original research used common practices at the time to devise the architecture of and to train a deep neural network.  They implemented their code in pylearn2, a python deep learning library.  The original code can be found [here][1].  The original paper can be found on [arxiv][3].
 
 In this paper I focus on investigating their code in the context of more modern approaches to deep learning and porting the code to a more common framework at the time of this writing, Keras with a Tensorflow backend.
 
@@ -116,10 +121,16 @@ The original dataset consisted of 11 million records.  To facilitate fast protot
 
 ## References
 
-[1]: https://github.com/uci-igb/higgs-susy "Higgs-Sussy"
-[2]: https://github.com/plaidml/plaidml "Plaidml"
-[3]: https://arxiv.org/pdf/1402.4735.pdf "Searching for Exotic Particles in High-Energy Physics with Deep Learning"
-[4]: https://archive.ics.uci.edu/ml/datasets/HIGGS "HIGGS Data Set"
+1. https://github.com/uci-igb/higgs-susy "Higgs-Sussy"
+2. https://github.com/plaidml/plaidml "Plaidml"
+3. https://arxiv.org/pdf/1402.4735.pdf "Searching for Exotic Particles in High-Energy Physics with Deep Learning"
+4. https://archive.ics.uci.edu/ml/datasets/HIGGS "HIGGS Data Set"
+
+
+[1]: <https://github.com/uci-igb/higgs-susy> "Higgs-Sussy"
+[2]: <https://github.com/plaidml/plaidml> "Plaidml"
+[3]: <https://arxiv.org/pdf/1402.4735.pdf> "Searching for Exotic Particles in High-Energy Physics with Deep Learning"
+[4]: <https://archive.ics.uci.edu/ml/datasets/HIGGS> "HIGGS Data Set"
 
 ## Notes
 
