@@ -32,7 +32,7 @@ The first 21 features (columns 2-22) are properties measured by the Large Hadron
 
 The port was implemented in python as a command line program.  The defaults of the program are the original hyperparameters devised by the authors of the original paper.  However, these defaults can be changed from the command line by simply including an optional flag followed by the modified parameter's value
 
-     python higgs_original_tf_port.py -b 1000 -e 1 -f HIGGS_22e5.csv -p 1 -a relu
+    $ python higgs_original_tf_port.py -b 1000 -e 1 -f HIGGS_22e5.csv -p 1 -a relu
 
 Help can be invoked from the command line by invoking the -h switch.
 
@@ -79,7 +79,7 @@ Help can be invoked from the command line by invoking the -h switch.
 
 THe field of Deep Learning is experiencing an explosive growth curve fueled by increasingly sophisticated and capable hardware and emerging business applications in nearly every field generating real world returns on investments superior to methods deep learning is replacing.  
 
-Cponsequently, there are a number of potential improvements to the original model suggested simply by the performant models proven and establised in research and business settings today.  A list of potential improvements to the original model in no particular order are as follows.
+Consequently, there are a number of potential improvements to the original model suggested simply by the performant models proven and establised in research and business settings today.  A list of potential improvements to the original model in no particular order are as follows.
 
 - Relu activations to improve training and convergence
 - Normalizing the data or using batch normalizing to improve convergence
@@ -102,9 +102,9 @@ I attempted to recreate faithfully the architecture of the original paper.
 
 ### Splitcsv
 
-The original dataset consisted of 11 million records.  To facilitate fast prototyping, the data was split using python into configurable integer fractional subsets of the original data.  Splitcsv can be used to faccilitate this splitting.  The following splits the dataset into 5 equal sized subsets.
+The original dataset consisted of 11 million records.  To facilitate fast prototyping, the data was split using the python script `splitcsv.py` into configurable integer fractional subsets of the original data.  Splitcsv can be used to faccilitate this splitting.  The following command splits the dataset into 5 equal sized subsets.
 
-    python splitcsv.py HIGGS.csv 5
+    $ python splitcsv.py HIGGS.csv 5
 
 ## References
 [1]: https://github.com/uci-igb/higgs-susy "Higgs-Sussy"
