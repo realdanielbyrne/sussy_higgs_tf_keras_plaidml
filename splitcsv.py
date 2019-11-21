@@ -1,12 +1,15 @@
 import sys
 
 if(len(sys.argv) < 2):
-  print('Provide File Location')
+  print('Plase provide the csv file path to spilt')
   sys.exit()
 
+if(len(sys.argv) = 3):
+  splitlevel = sys.argv[2]
+else:
+  splitlevel = 5
+
 fil = sys.argv[1]
-
-
 csvfilename = open(fil, 'r', -1).readlines()
 file = 1
 

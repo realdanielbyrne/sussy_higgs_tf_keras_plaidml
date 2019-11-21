@@ -23,7 +23,6 @@ from keras.layers import Input,Dense, Dropout, Activation, SpatialDropout1D
 from keras.initializers import RandomNormal
 from keras.optimizers import SGD
 from sklearn.model_selection import train_test_split
-  from sklearn.preprocessing import MinMaxScaler
 def GetInputDim(features = 'raw'):
   """
   The original paper variously trained on the first 22 raw features,
@@ -46,7 +45,7 @@ def GetInputDim(features = 'raw'):
   return (start, end)
 
 # Implementation of Supervised Greedy Layerwise Pre-training (Bengio et.al)
-def AddLayer(model):
+def AddLayer(model, activation):
   """
     Adds a layer to a model, before the output layer and after all other layers.
     This is a implementation of the Supervised Greedy Layerwise Pre-training (Bengio et.al)
@@ -64,11 +63,11 @@ def AddLayer(model):
     layer.trainable = False
 
   # add new layer and train
-  model.add(Dense(300, activation='relu', kernel_initializer=hiddeninit))
+  model.add(Dense(300, activation=activation, kernel_initializer=hiddeninit))
   model.add(output_layer)
   return model
 
-def BuildInitialModel(input_dim):
+def BuildInitialModel(input_dim, activation):
   """
   Builds a model with a single input layer and a binary sigmoid output layer.
 
@@ -81,7 +80,7 @@ def BuildInitialModel(input_dim):
   outputinit = RandomNormal(mean=0.0, stddev=0.001, seed=None) # original model parameters for initializing output layer
 
   model = Sequential()
-  model.add(Dense(300, input_dim=input_dim, activation='relu',kernel_initializer=l1init))
+  model.add(Dense(300, input_dim=input_dim, activation=activation,kernel_initializer=l1init))
   model.add(Dropout(0.5))
   model.add(Dense(1, activation='sigmoid',kernel_initializer=outputinit))
   return model
@@ -116,10 +115,6 @@ def GetAllData(start,end,filepath):
   data = np.genfromtxt(filepath, delimiter=',')
   X = data[:,start:end].astype(float)
 
-
-  scaler = MinMaxScaler(feature_range=(0,1))
-  scaled_train = scaler.fit_transform(X)
-
   y = data[:,:1].astype(int)
   X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = .1)
   return X_train, X_test, y_train, y_test
@@ -140,63 +135,78 @@ def score(model, X_test, y_test):
 
 
 def main():
-  parser = argparse.ArgumentParser(description='Builds Higgs Boson Classifier with parameters.')
+  parser = argparse.ArgumentParser(description='Builds Higgs Boson Classifier model in Keras with a tensorflow backend on PlaidML.')
 
-  parser.add_argument('-p','--filepath',
+  parser.add_argument('-f','--filepath',
                       action='store',
                       type=str,
                       dest='filepath',
-                      default="HIGGS_22e5.csv",
-                      help="Filename of training and test data.  Column 1 should be the binary classification label.  1 - Higgs Boson, 2 - Background Process")
+                      default="HIGGS.csv", # Reference HIGGS_22e5.csv to run the code on a reduced, 2.2millon record, dataset
+                      help="Filename of training and test data.\nOriginal dataset can be obtained from https://archive.ics.uci.edu/ml/datasets/HIGGS.")
 
   parser.add_argument('-l','--learningrate',
                       action='store',
                       type=float,
                       dest='lr',
                       default=.05,
-                      help="Sets the initial learning rate")
+                      help="Sets the initial learning rate. Default = .05")
 
   parser.add_argument('-m','--momentum',
                       action='store',
                       type=float,
                       dest='momentum',
                       default=.9, # original model default
-                      help="Sets the initial momentum")
+                      help="Sets the initial momentum. Default = .9.")
 
   parser.add_argument('-d','--decay',
                       action='store',
                       type=float,
                       dest='decay',
                       default=1e-6, # original model default
-                      help="Sets the learning rate decay rate.")
+                      help="Sets the learning rate decay rate. Default = 1e-6.")
 
   parser.add_argument('-tt','--ttsplit',
                       action='store',
                       type=float,
                       dest='ttsplit',
                       default=.045, # 5e5/11e6, original model default
-                      help="Train test split percentage.")
+                      help="Train test split percentage. Default = .045.")
 
   parser.add_argument('-e','--epochs',
                       action='store',
                       type=int,
                       dest='epochs',
                       default=200, # original model default
-                      help="# of epochs.")
+                      help="Sets the # of epochs. Default = 200.")
 
   parser.add_argument('-b','--batch_size',
                       action='store',
                       type=int,
                       dest='batch_size',
                       default=100, # original model default
-                      help="# of epochs.")
+                      help="Sets the batch size. Default = 100.")
 
   parser.add_argument('-ft','--feature_type',
                       action='store',
                       type=str,
                       dest='feature_type',
                       default='raw',
-                      help="# of features.")
+                      help="raw - Selects the 22 unadultered features in the dataset.\nengineered- selects only the hand engineered features.\nall - Selects the entire set of features.\nDefault 'raw'")
+
+  parser.add_argument('-p','--pretrain-epochs',
+                      action='store',
+                      type=int,
+                      dest='pretrain_epochs',
+                      default=5,
+                      help="Number of epochs to pretrain each lahyer on when adding that layer to the complete model. Default = 5")
+
+  parser.add_argument('-a','--activation',
+                      action='store',
+                      type=str,
+                      dest='activation',
+                      default="tanh",
+                      help="Sets the activation of each layer not including the final classification layer. Default = tanh.")
+
 
   args = parser.parse_args()
 
@@ -210,7 +220,7 @@ def main():
   input_dim  = end - start
 
   # Build initial model
-  model = BuildInitialModel(input_dim)
+  model = BuildInitialModel(input_dim, args.activation)
   model = CompileModel(model, lr=args.lr, decay=args.decay, momentum=args.momentum)
 
   # Load data then train
@@ -220,8 +230,8 @@ def main():
   n_layers = 4
   for _ in range(n_layers):
     # add layer
-    AddLayer(model)
-    model.fit(X_train, y_train, epochs = 7, batch_size = args.batch_size, validation_split = args.ttsplit)
+    AddLayer(model,args.activation)
+    model.fit(X_train, y_train, epochs = args.pretrain_epochs, batch_size = args.batch_size, validation_split = args.ttsplit)
 
   # Train the full model
   for layer in model.layers:
