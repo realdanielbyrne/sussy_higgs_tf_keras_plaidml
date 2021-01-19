@@ -1,4 +1,4 @@
-# Searching for Exotic Particles in High-Energy Physics with Deep Learning' Port to Tensorflow/Keras
+# Port to Tensorflow of 'Searching for Exotic Particles in High-Energy Physics with Deep Learning'
 
 
 
