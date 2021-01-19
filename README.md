@@ -1,4 +1,4 @@
-# 'Searching for Exotic Particles in High-Energy Physics with Deep Learning' Port to Tensorflow/Keras
+# Searching for Exotic Particles in High-Energy Physics with Deep Learning' Port to Tensorflow/Keras
 
 
 
@@ -78,7 +78,7 @@ Help can be invoked from the command line by invoking the -h switch.
 
 ### Suggested Improvements
 
-THe field of Deep Learning is experiencing an explosive growth curve fueled by increasingly sophisticated and capable hardware and emerging business applications in nearly every field generating real world returns on investments superior to methods deep learning is replacing.  
+The field of Deep Learning is experiencing an explosive growth curve fueled by increasingly sophisticated and capable hardware and emerging business applications in nearly every field generating real world returns on investments superior to methods deep learning is replacing.  
 
 Consequently, there are a number of potential improvements to the original model suggested simply by the performant models proven and establised in research and business settings today.  A list of potential improvements to the original model in no particular order are as follows.
 
