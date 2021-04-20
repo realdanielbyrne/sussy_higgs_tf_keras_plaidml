@@ -13,8 +13,6 @@ import plaidml.keras # used plaidml so I can run on any machine's video card reg
 import tensorflow as tf
 import numpy as np
 import argparse
-import sklearn
-import sys
 import os
 
 plaidml.keras.install_backend()
